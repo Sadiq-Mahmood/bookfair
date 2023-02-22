@@ -4,22 +4,25 @@ const Joi = require("joi");
 const db = require("./mongodb");
 const Register = require("./components/models/register");
 const newSellerUser = require("./components/models/sellerUser");
-
-// app.get("/", (req, res) => {
-//   res.send("hello world");
-// });
-
+const shopRoutes = require("./routes/shops");
+const bookRoutes = require("./routes/books");
+const cors = require("cors");
+const Book = require("./models/Book");
+app.get("/", (req, res) => {
+  res.send("hello world");
+});
+app.use(cors());
 db();
+
 app.use(express.json());
-
-app.post("/register/", async (req, res) => {
+app.use("/shops", shopRoutes);
+app.use("/books", bookRoutes);
+app.post("/register", async (req, res) => {
   const { email } = req.body;
-
+  console.log(req.body);
   try {
     if (!req.body.name || req.body.name.length < 3) {
-      res
-        .status(400)
-        .send("name is required and should be mininmum 3 character");
+      res.status(400).send("name is required and should be mininmum 3 character");
       return;
     }
 
@@ -34,11 +37,11 @@ app.post("/register/", async (req, res) => {
         email: req.body.email,
       });
     } else {
-      const newUser = await Register.create({
-        name: req.body.name,
-        email: req.body.email,
-      });
     }
+    const newUser = await Register.create({
+      name: req.body.name,
+      email: req.body.email,
+    });
 
     // console.log(newUser);
 

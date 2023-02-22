@@ -1,4 +1,5 @@
 const mongoose = require("mongoose");
+const register = require("./components/models/register");
 
 const monogodb = () => {
   mongoose
@@ -10,7 +11,7 @@ const monogodb = () => {
 module.exports = monogodb;
 
 // async function registerNewUser() {
-//   const user = new User({
+//   const user = new register.create({
 //     name: "Sadiq Mahmood",
 //     email: "sadiqmahmood344@gmail.com",
 //   });
